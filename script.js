@@ -157,3 +157,70 @@ function nextFlower() {
     showCurrentFlower();
 
 }
+// ================================
+// Galerie öffnen
+// ================================
+
+function openGallery() {
+
+    gallery.classList.remove("hidden");
+
+    galleryGrid.innerHTML = "";
+
+    flowers.forEach(file => {
+
+        const img = document.createElement("img");
+
+        img.src = CONFIG.imageFolder + file;
+
+        img.className = "galleryImage";
+
+        img.loading = "lazy";
+
+        img.addEventListener("click", () => {
+
+            showGalleryImage(file);
+
+        });
+
+        galleryGrid.appendChild(img);
+
+    });
+
+}
+
+
+// ================================
+// Galerie schließen
+// ================================
+
+function closeGalleryView() {
+
+    gallery.classList.add("hidden");
+
+}
+
+
+// ================================
+// Bild groß anzeigen
+// ================================
+
+function showGalleryImage(file) {
+
+    flowerImage.classList.remove("show");
+
+    setTimeout(() => {
+
+        flowerImage.src = CONFIG.imageFolder + file;
+
+        flowerImage.onload = () => {
+
+            flowerImage.classList.add("show");
+
+        };
+
+    },150);
+
+    closeGalleryView();
+
+}
