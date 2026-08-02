@@ -3,38 +3,19 @@
 ========================== */
 
 html,
-body{
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
 
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: url("./assets/garten.jpg") center center / cover no-repeat fixed;
 }
 
 
-/* ==========================
-   Hintergrund
-========================== */
 
-#background{
-
-    position:fixed;
-
-    left:0;
-    top:0;
-
-    width:100%;
-    height:100%;
-
-    background-image:url("assets/garten.jpg");
-    background-size:cover;
-    background-position:center;
-
-    z-index:-1;
-
-}
 
 
 /* ==========================
