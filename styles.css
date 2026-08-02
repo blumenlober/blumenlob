@@ -11,7 +11,11 @@ body {
 
     font-family: Arial, Helvetica, sans-serif;
 
-    background: url("./assets/garten.jpg") center center / cover no-repeat fixed;
+    background-image: url("../assets/garten.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 
