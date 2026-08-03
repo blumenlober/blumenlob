@@ -1,69 +1,67 @@
-const flower = document.getElementById("flower");
-const nextButton = document.getElementById("nextButton");
+window.addEventListener("DOMContentLoaded", async () => {
 
-const STORAGE_KEY = "blueten-privat";
+    const flower = document.getElementById("flower");
+    const nextButton = document.getElementById("nextButton");
 
-let state;
-let images;
+    const STORAGE_KEY = "blueten-privat";
 
-async function loadFlower() {
+    let images = [];
 
-    if (!images) {
+    async function loadFlower() {
 
-        const response = await fetch("blueten.json");
-        images = await response.json();
+        if (images.length === 0) {
 
-    }
+            const response = await fetch("blueten.json");
+            images = await response.json();
 
-    state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        }
 
-    if (!state || state.remaining.length === 0) {
+        let state = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-        const shuffled = [...images];
+        if (!state || state.remaining.length === 0) {
 
-        shuffle(shuffled);
+            const shuffled = [...images];
 
-        state = {
-            remaining: shuffled
-        };
+            shuffle(shuffled);
 
-    }
+            state = { remaining: shuffled };
 
-    const next = state.remaining.pop();
+        }
 
-    flower.style.opacity = 0;
+        const next = state.remaining.pop();
 
-    setTimeout(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 
-        flower.src = "blueten/" + next;
+        flower.style.opacity = 0;
 
-        flower.onload = () => {
+        setTimeout(() => {
 
-            flower.style.opacity = 1;
+            flower.src = "blueten/" + next;
 
-        };
+            flower.onload = () => {
 
-    },150);
+                flower.style.opacity = 1;
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            };
 
-}
-
-function shuffle(array){
-
-    for(let i=array.length-1;i>0;i--){
-
-        const j=Math.floor(Math.random()*(i+1));
-
-        [array[i],array[j]]=[array[j],array[i]];
+        }, 150);
 
     }
 
-}
+    function shuffle(array) {
 
-nextButton.addEventListener("click", () => {
-    alert("Button funktioniert");
-    loadFlower();
+        for (let i = array.length - 1; i > 0; i--) {
+
+            const j = Math.floor(Math.random() * (i + 1));
+
+            [array[i], array[j]] = [array[j], array[i]];
+
+        }
+
+    }
+
+    nextButton.addEventListener("click", loadFlower);
+
+    await loadFlower();
+
 });
-
-loadFlower();
