@@ -61,6 +61,9 @@ function shuffle(array){
 
 }
 
-nextButton.addEventListener("click",loadFlower);
+nextButton.addEventListener("click", () => {
+    alert("Button funktioniert");
+    loadFlower();
+});
 
 loadFlower();
