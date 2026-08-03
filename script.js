@@ -63,6 +63,6 @@ function showNextFlower() {
     flower.src = CONFIG.imageFolder + file;
 }
 
-nextButton.addEventListener("click", showNextFlower);
+document.addEventListener("click", showNextFlower);
 
 init();
