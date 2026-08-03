@@ -1,14 +1,14 @@
 const flower = document.getElementById("flower");
 const nextButton = document.getElementById("nextButton");
 
-const STORAGE_KEY = "blueten-privat";
+const STORAGE_KEY = CONFIG.storageKey;
 
 let images = [];
 let remaining = [];
 
 async function init() {
 
-    const response = await fetch("blueten.json");
+    const response = await fetch(CONFIG.json);
     images = await response.json();
 
     loadState();
@@ -60,7 +60,7 @@ function showNextFlower() {
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
 
-    flower.src = "blueten/" + file;
+    flower.src = CONFIG.imageFolder + file;
 }
 
 nextButton.addEventListener("click", showNextFlower);
