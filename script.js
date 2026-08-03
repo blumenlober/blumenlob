@@ -1,67 +1,68 @@
-window.addEventListener("DOMContentLoaded", async () => {
+const flower = document.getElementById("flower");
+const nextButton = document.getElementById("nextButton");
 
-    const flower = document.getElementById("flower");
-    const nextButton = document.getElementById("nextButton");
+const STORAGE_KEY = "blueten-privat";
 
-    const STORAGE_KEY = "blueten-privat";
+let images = [];
+let remaining = [];
 
-    let images = [];
+async function init() {
 
-    async function loadFlower() {
+    const response = await fetch("blueten.json");
+    images = await response.json();
 
-        if (images.length === 0) {
+    loadState();
 
-            const response = await fetch("blueten.json");
-            images = await response.json();
+    showNextFlower();
+}
 
-        }
+function loadState() {
 
-        let state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    const saved = localStorage.getItem(STORAGE_KEY);
 
-        if (!state || state.remaining.length === 0) {
+    if (saved) {
 
-            const shuffled = [...images];
+        remaining = JSON.parse(saved);
 
-            shuffle(shuffled);
+    } else {
 
-            state = { remaining: shuffled };
+        refillRemaining();
 
-        }
+    }
+}
 
-        const next = state.remaining.pop();
+function refillRemaining() {
 
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    remaining = [...images];
 
-        flower.style.opacity = 0;
+    shuffle(remaining);
+}
 
-        setTimeout(() => {
+function shuffle(array) {
 
-            flower.src = "blueten/" + next;
+    for (let i = array.length - 1; i > 0; i--) {
 
-            flower.onload = () => {
+        const j = Math.floor(Math.random() * (i + 1));
 
-                flower.style.opacity = 1;
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 
-            };
+function showNextFlower() {
 
-        }, 150);
+    if (remaining.length === 0) {
+
+        refillRemaining();
 
     }
 
-    function shuffle(array) {
+    const file = remaining.pop();
 
-        for (let i = array.length - 1; i > 0; i--) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
 
-            const j = Math.floor(Math.random() * (i + 1));
+    flower.src = "blueten/" + file;
+}
 
-            [array[i], array[j]] = [array[j], array[i]];
+nextButton.addEventListener("click", showNextFlower);
 
-        }
-
-    }
-
-    nextButton.addEventListener("click", loadFlower);
-
-    await loadFlower();
-
-});
+init();
