@@ -30,3 +30,34 @@ main {
     display: block;
     filter: drop-shadow(0 12px 25px rgba(0,0,0,.25));
 }
+#nextButton{
+
+    position:fixed;
+
+    bottom:30px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    border:none;
+
+    border-radius:40px;
+
+    padding:16px 26px;
+
+    font-size:20px;
+
+    background:white;
+
+    cursor:pointer;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+
+}
+
+#nextButton:active{
+
+    transform:translateX(-50%) scale(.97);
+
+}

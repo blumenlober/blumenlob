@@ -1,15 +1,22 @@
 const flower = document.getElementById("flower");
+const nextButton = document.getElementById("nextButton");
 
 const STORAGE_KEY = "blueten-privat";
 
-async function start() {
+let state;
+let images;
 
-    const response = await fetch("blueten.json");
-    const images = await response.json();
+async function loadFlower() {
 
-    let state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (!images) {
 
-    // Beim ersten Start oder wenn alle Blüten gezeigt wurden
+        const response = await fetch("blueten.json");
+        images = await response.json();
+
+    }
+
+    state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
     if (!state || state.remaining.length === 0) {
 
         const shuffled = [...images];
@@ -19,23 +26,41 @@ async function start() {
         state = {
             remaining: shuffled
         };
+
     }
 
-    const nextFlower = state.remaining.pop();
+    const next = state.remaining.pop();
 
-    flower.src = "blueten/" + nextFlower;
+    flower.style.opacity = 0;
+
+    setTimeout(() => {
+
+        flower.src = "blueten/" + next;
+
+        flower.onload = () => {
+
+            flower.style.opacity = 1;
+
+        };
+
+    },150);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+
 }
 
-function shuffle(array) {
+function shuffle(array){
 
-    for (let i = array.length - 1; i > 0; i--) {
+    for(let i=array.length-1;i>0;i--){
 
-        const j = Math.floor(Math.random() * (i + 1));
+        const j=Math.floor(Math.random()*(i+1));
 
-        [array[i], array[j]] = [array[j], array[i]];
+        [array[i],array[j]]=[array[j],array[i]];
+
     }
+
 }
 
-start();
+nextButton.addEventListener("click",loadFlower);
+
+loadFlower();
