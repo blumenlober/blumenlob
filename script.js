@@ -1,19 +1,26 @@
-const flower = document.getElementById("flower");
+const flowerA = document.getElementById("flowerA");
+const flowerB = document.getElementById("flowerB");
 const nextButton = document.getElementById("nextButton");
 
-const STORAGE_KEY = CONFIG.storageKey;
+const STORAGE_KEY = "blueten-privat";
 
 let images = [];
 let remaining = [];
+let activeFlower = flowerA;
+let hiddenFlower = flowerB;
 
 async function init() {
 
-    const response = await fetch(CONFIG.json);
+    const response = await fetch("blueten.json");
     images = await response.json();
 
     loadState();
 
-    showNextFlower();
+    await showNextFlower(false);
+
+    nextButton.addEventListener("click", () => {
+        showNextFlower(true);
+    });
 }
 
 function loadState() {
@@ -29,24 +36,24 @@ function loadState() {
 
         remaining = JSON.parse(saved);
 
-        // Alte oder beschädigte Daten erkennen
         if (!Array.isArray(remaining)) {
-            throw new Error("Ungültiger Speicherinhalt");
+            throw new Error();
         }
 
-    } catch (e) {
+    } catch {
 
         refillRemaining();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
 
     }
+
 }
 
 function refillRemaining() {
 
     remaining = [...images];
-
     shuffle(remaining);
+
 }
 
 function shuffle(array) {
@@ -56,10 +63,23 @@ function shuffle(array) {
         const j = Math.floor(Math.random() * (i + 1));
 
         [array[i], array[j]] = [array[j], array[i]];
+
     }
+
 }
 
-function showNextFlower() {
+function loadImage(img, src) {
+
+    return new Promise((resolve) => {
+
+        img.onload = resolve;
+        img.src = src;
+
+    });
+
+}
+
+async function showNextFlower(withAnimation = true) {
 
     if (remaining.length === 0) {
         refillRemaining();
@@ -69,18 +89,21 @@ function showNextFlower() {
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
 
-    flower.classList.add("fade");
+    await loadImage(hiddenFlower, "blueten/" + file);
 
-    setTimeout(() => {
+    if (withAnimation) {
 
-        flower.src = CONFIG.imageFolder + file;
+        activeFlower.classList.remove("visible");
+        hiddenFlower.classList.add("visible");
 
-        flower.classList.remove("fade");
+    } else {
 
-    }, 400);
+        hiddenFlower.classList.add("visible");
+
+    }
+
+    [activeFlower, hiddenFlower] = [hiddenFlower, activeFlower];
 
 }
-
-document.addEventListener("click", showNextFlower);
 
 init();
