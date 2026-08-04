@@ -20,13 +20,24 @@ function loadState() {
 
     const saved = localStorage.getItem(STORAGE_KEY);
 
-    if (saved) {
+    if (!saved) {
+        refillRemaining();
+        return;
+    }
+
+    try {
 
         remaining = JSON.parse(saved);
 
-    } else {
+        // Alte oder beschädigte Daten erkennen
+        if (!Array.isArray(remaining)) {
+            throw new Error("Ungültiger Speicherinhalt");
+        }
+
+    } catch (e) {
 
         refillRemaining();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
 
     }
 }
