@@ -62,28 +62,22 @@ function shuffle(array) {
 function showNextFlower() {
 
     if (remaining.length === 0) {
-
         refillRemaining();
-
     }
 
     const file = remaining.pop();
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
 
-    flower.style.opacity = 0;
+    flower.classList.add("fade");
 
     setTimeout(() => {
 
-        flower.onload = () => {
-
-            flower.style.opacity = 1;
-
-        };
-
         flower.src = CONFIG.imageFolder + file;
 
-    }, 180);
+        flower.classList.remove("fade");
+
+    }, 400);
 
 }
 
