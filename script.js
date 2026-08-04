@@ -71,7 +71,20 @@ function showNextFlower() {
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
 
-    flower.src = CONFIG.imageFolder + file;
+    flower.style.opacity = 0;
+
+    setTimeout(() => {
+
+        flower.onload = () => {
+
+            flower.style.opacity = 1;
+
+        };
+
+        flower.src = CONFIG.imageFolder + file;
+
+    }, 180);
+
 }
 
 document.addEventListener("click", showNextFlower);
