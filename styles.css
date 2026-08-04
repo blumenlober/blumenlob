@@ -113,3 +113,6 @@ main {
     transform:translateX(-50%) scale(.97);
 
 }
+#galleryButton{
+    display: none;
+}
