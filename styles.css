@@ -60,6 +60,10 @@ main {
 
     filter:drop-shadow(0 12px 25px rgba(0,0,0,.25));
 
+    background: transparent;
+
+    border: none;
+
 }
 
 .flower.visible{
@@ -112,7 +116,4 @@ main {
 
     transform:translateX(-50%) scale(.97);
 
-}
-#galleryButton{
-    display: none;
 }
