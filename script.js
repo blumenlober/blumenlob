@@ -95,6 +95,7 @@ async function showNextFlower(withAnimation = true) {
 
     activeFlower.classList.remove("visible");
     hiddenFlower.classList.add("visible");
+    [activeFlower, hiddenFlower] = [hiddenFlower, activeFlower];
 
 } else {
 
@@ -106,7 +107,7 @@ async function showNextFlower(withAnimation = true) {
 
     }
 
-    [activeFlower, hiddenFlower] = [hiddenFlower, activeFlower];
+  
 
 }
 
