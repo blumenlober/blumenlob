@@ -98,7 +98,13 @@ async function showNextFlower(withAnimation = true) {
 
     } else {
 
-        hiddenFlower.classList.add("visible");
+        } else {
+
+    hiddenFlower.classList.add("visible");
+    activeFlower = hiddenFlower;
+    hiddenFlower = flowerA;
+
+}
 
     }
 
