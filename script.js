@@ -93,21 +93,18 @@ async function showNextFlower(withAnimation = true) {
 
     if (withAnimation) {
 
-    activeFlower.classList.remove("visible");
-    hiddenFlower.classList.add("visible");
-    [activeFlower, hiddenFlower] = [hiddenFlower, activeFlower];
+        activeFlower.classList.remove("visible");
+        hiddenFlower.classList.add("visible");
 
-} else {
+        [activeFlower, hiddenFlower] = [hiddenFlower, activeFlower];
 
-    activeFlower.src = hiddenFlower.src;
-    activeFlower.classList.add("visible");
-    hiddenFlower.classList.remove("visible");
+    } else {
 
-}
+        activeFlower.src = hiddenFlower.src;
+        activeFlower.classList.add("visible");
+        hiddenFlower.classList.remove("visible");
 
     }
-
-  
 
 }
 
