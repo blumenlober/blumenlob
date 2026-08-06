@@ -10,7 +10,7 @@ body {
 }
 
 body {
-    background-image: red;
+    background-image: url("assets/garten.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
