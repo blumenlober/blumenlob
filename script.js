@@ -1,7 +1,10 @@
 const flowerA = document.getElementById("flowerA");
 const flowerB = document.getElementById("flowerB");
 const nextButton = document.getElementById("nextButton");
-
+const galleryButton = document.getElementById("galleryButton");
+const gallery = document.getElementById("gallery");
+const galleryGrid = document.getElementById("galleryGrid");
+const closeGallery = document.getElementById("closeGallery");
 const STORAGE_KEY = "blueten-privat";
 
 let images = [];
@@ -21,6 +24,17 @@ async function init() {
     nextButton.addEventListener("click", () => {
         showNextFlower(true);
     });
+    galleryButton.addEventListener("click", () => {
+
+    gallery.classList.remove("hidden");
+
+});
+
+closeGallery.addEventListener("click", () => {
+
+    gallery.classList.add("hidden");
+
+});
 }
 
 function loadState() {
