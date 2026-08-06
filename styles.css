@@ -59,20 +59,14 @@ main {
 
     pointer-events:none;
 
+    background:transparent;
 
-    background: transparent;
+    border:none;
 
-    border: none;
-
-    .flower {
-
-    ...
-
-    will-change: opacity;
+    will-change:opacity;
 
 }
 
-}
 
 .flower.visible{
 
