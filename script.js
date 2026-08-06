@@ -18,6 +18,29 @@ let hiddenFlower = flowerB;
 
 async function init() {
 
+    
+
+    alert("Init gestartet");
+
+    const response = await fetch(CONFIG.json);
+
+    alert("JSON geladen");
+
+    images = await response.json();
+
+    alert("JSON eingelesen");
+
+    loadState();
+
+    alert("State geladen");
+
+    await showNextFlower(false);
+
+    alert("Erstes Bild geladen");
+
+    ...
+}
+
     const response = await fetch(CONFIG.json);
     images = await response.json();
 
