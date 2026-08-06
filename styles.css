@@ -200,3 +200,16 @@ main {
     transform:scale(1.03);
 
 }
+#buttonBar {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    z-index: 9999;
+}
+
+#buttonBar button {
+    pointer-events: auto;
+}
