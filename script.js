@@ -1,40 +1,49 @@
 const flowerA = document.getElementById("flowerA");
 const flowerB = document.getElementById("flowerB");
+
 const nextButton = document.getElementById("nextButton");
 const galleryButton = document.getElementById("galleryButton");
+
 const gallery = document.getElementById("gallery");
 const galleryGrid = document.getElementById("galleryGrid");
 const closeGallery = document.getElementById("closeGallery");
-const STORAGE_KEY = "blueten-privat";
+
+const STORAGE_KEY = CONFIG.storageKey;
 
 let images = [];
 let remaining = [];
+
 let activeFlower = flowerA;
 let hiddenFlower = flowerB;
 
 async function init() {
 
-    const response = await fetch("blueten.json");
+    const response = await fetch(CONFIG.json);
     images = await response.json();
 
     loadState();
 
     await showNextFlower(false);
 
+    buildGallery();
+
     nextButton.addEventListener("click", () => {
         showNextFlower(true);
     });
+
     galleryButton.addEventListener("click", () => {
+        gallery.classList.remove("hidden");
+    });
 
-    gallery.classList.remove("hidden");
+    closeGallery.addEventListener("click", () => {
+        gallery.classList.add("hidden");
+    });
 
-});
-
-closeGallery.addEventListener("click", () => {
-
-    gallery.classList.add("hidden");
-
-});
+    gallery.addEventListener("click", (e) => {
+        if (e.target === gallery) {
+            gallery.classList.add("hidden");
+        }
+    });
 }
 
 function loadState() {
@@ -103,7 +112,7 @@ async function showNextFlower(withAnimation = true) {
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
 
-    await loadImage(hiddenFlower, "blueten/" + file);
+    await loadImage(hiddenFlower, CONFIG.imageFolder + file);
 
     if (withAnimation) {
 
@@ -119,6 +128,24 @@ async function showNextFlower(withAnimation = true) {
         hiddenFlower.classList.remove("visible");
 
     }
+
+}
+
+function buildGallery() {
+
+    galleryGrid.innerHTML = "";
+
+    images.forEach(file => {
+
+        const img = document.createElement("img");
+
+        img.src = CONFIG.imageFolder + file;
+        img.className = "galleryImage";
+        img.alt = "";
+
+        galleryGrid.appendChild(img);
+
+    });
 
 }
 
