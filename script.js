@@ -32,8 +32,10 @@ async function init() {
     });
 
     galleryButton.addEventListener("click", () => {
-        gallery.classList.remove("hidden");
-    });
+
+    alert("Galerie-Button funktioniert");
+
+});
 
     closeGallery.addEventListener("click", () => {
         gallery.classList.add("hidden");
