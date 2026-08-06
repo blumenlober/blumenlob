@@ -10,7 +10,7 @@ body {
 }
 
 body {
-    background-image: url("assets/garten.jpg");
+    background-image: red;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -59,7 +59,6 @@ main {
 
     pointer-events:none;
 
-    filter:drop-shadow(0 12px 25px rgba(0,0,0,.25));
 
     background: transparent;
 
