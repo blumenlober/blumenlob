@@ -80,7 +80,7 @@ main {
     opacity: 0;
 
 }
-#nextButton{
+#buttonBar{
 
     position:fixed;
 
@@ -89,6 +89,16 @@ main {
     left:50%;
 
     transform:translateX(-50%);
+
+    display:flex;
+
+    gap:15px;
+
+    z-index:100;
+
+}
+
+#buttonBar button{
 
     border:none;
 
@@ -106,11 +116,13 @@ main {
 
 }
 
-#nextButton:active{
+#buttonBar button:active{
 
-    transform:translateX(-50%) scale(.97);
+    transform:scale(.97);
 
 }
+
+
 /* ==========================
    Galerie
 ========================== */
