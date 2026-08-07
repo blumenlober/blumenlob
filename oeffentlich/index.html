@@ -1,62 +1,105 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blüten</title>
 
-    <link rel="stylesheet" href="../style.css">
+    <title>Blüten des Lobes</title>
+
+    <link rel="stylesheet" href="../styles.css?v=5">
+
 </head>
 
 <body>
 
-
 <main>
 
     <div id="flowerContainer">
-        <img id="flower" src="" alt="Blüte">
+
+        <img
+            id="flowerA"
+            class="flower visible"
+            src=""
+            alt=""
+            draggable="false">
+
+        <img
+            id="flowerB"
+            class="flower"
+            src=""
+            alt=""
+            draggable="false">
+
     </div>
 
-    <div id="buttons">
+    <div id="buttonBar">
 
-        <button id="nextButton">
-            🌼 Neue Blüte
+        <button
+            id="nextButton"
+            type="button">
+
+            🌼 Blüte pflücken
+
         </button>
 
-        <button id="galleryButton">
-            📖 Alle Blüten
+
+        <button
+            id="galleryButton"
+            type="button">
+
+            📖 Galerie
+
         </button>
 
     </div>
 
 </main>
 
-<div id="gallery" class="hidden">
+
+<div
+    id="gallery"
+    class="hidden"
+    aria-hidden="true">
+
     <div id="galleryContent">
 
-        <button id="closeGallery">
+        <button
+            id="closeGallery"
+            type="button"
+            aria-label="Galerie schließen">
+
             ✕
+
         </button>
+
 
         <div id="galleryGrid"></div>
 
     </div>
+
 </div>
+
 
 <script>
 
 const CONFIG = {
-    imageFolder: "bilder/",
-    jsonFile: "blueten.json",
+
+    json: "blueten.json",
+
+    imageFolder: "blueten/",
+
     storageKey: "blueten-oeffentlich"
+
 };
 
 </script>
 
-<script src="../script.js"></script>
+
+<script src="../script.js?v=10"></script>
+
 
 </body>
+
 </html>
-
-
-
