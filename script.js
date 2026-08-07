@@ -243,7 +243,6 @@ async function showRandomFlower(removeOld = true) {
 
 function displayFlower(flower) {
 
-
     hiddenFlower.src = flower.image;
 
 
@@ -252,31 +251,26 @@ function displayFlower(flower) {
 
 
     hiddenFlower.classList.add(
-    "visible"
-);
+        "visible"
+    );
 
 
-activeFlower.classList.remove(
-    "visible"
-);
+    activeFlower.classList.remove(
+        "visible"
+    );
+
 
     setTimeout(() => {
 
-
         const temp = activeFlower;
-
 
         activeFlower = hiddenFlower;
 
-
         hiddenFlower = temp;
-
 
         hiddenFlower.src = "";
 
-
     }, 600);
-
 
 
     updateText(
@@ -284,14 +278,11 @@ activeFlower.classList.remove(
     );
 
 }
-
-
 /* ==========================================================
    Text aktualisieren
    ========================================================== */
 
 function updateText(flower) {
-
 
     const title =
         document.getElementById(
@@ -363,6 +354,7 @@ function handleKeyDown(event) {
 
 }
 
+
 /* ==========================================================
    Galerie
    ========================================================== */
@@ -403,21 +395,25 @@ function buildGallery() {
 
         img.loading =
             "lazy";
+
+
         img.addEventListener(
             "click",
             () => {
 
-        currentFlower =
-            flower;
+                currentFlower =
+                    flower;
 
-        displayFlower(
-            flower
+
+                displayFlower(
+                    flower
+                );
+
+
+                closeGalleryWindow();
+
+            }
         );
-
-        closeGalleryWindow();
-
-    }
-);
 
 
         const title =
@@ -439,10 +435,6 @@ function buildGallery() {
         item.appendChild(title);
 
 
-
-        
-
-
         galleryGrid.appendChild(
             item
         );
@@ -452,6 +444,11 @@ function buildGallery() {
 
 }
 
+
+/* ==========================================================
+   Buttons Steuerung
+   ========================================================== */
+
 function hideButtons() {
 
     document.getElementById(
@@ -459,6 +456,17 @@ function hideButtons() {
     ).style.display = "none";
 
 }
+
+
+function showButtons() {
+
+    document.getElementById(
+        "buttonBar"
+    ).style.display = "flex";
+
+}
+
+
 /* ==========================================================
    Galerie öffnen
    ========================================================== */
@@ -469,9 +477,11 @@ function openGallery() {
         "hidden"
     );
 
+
     gallery.classList.add(
         "open"
     );
+
 
     hideButtons();
 
@@ -494,20 +504,19 @@ function closeGalleryWindow() {
         "open"
     );
 
+
     gallery.classList.add(
         "hidden"
     );
+
+
+    showButtons();
+
 
     gallery.setAttribute(
         "aria-hidden",
         "true"
     );
-
-}
-
-function showButtons() {
-
-    showButtons();
 
 }
 
