@@ -213,3 +213,29 @@ main {
 #buttonBar button {
     pointer-events: auto;
 }
+
+.galleryImage {
+
+    width:100%;
+
+    aspect-ratio:1 / 1;
+
+    object-fit:contain;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:white;
+
+    transition:
+        transform .2s ease;
+
+}
+
+
+.galleryImage:hover {
+
+    transform:scale(1.05);
+
+}

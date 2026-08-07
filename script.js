@@ -403,6 +403,21 @@ function buildGallery() {
 
         img.loading =
             "lazy";
+        img.addEventListener(
+            "click",
+            () => {
+
+        currentFlower =
+            flower;
+
+        displayFlower(
+            flower
+        );
+
+        closeGalleryWindow();
+
+    }
+);
 
 
         const title =
@@ -425,25 +440,7 @@ function buildGallery() {
 
 
 
-        item.addEventListener(
-            "click",
-            () => {
-
-
-                currentFlower =
-                    flower;
-
-
-                displayFlower(
-                    flower
-                );
-
-
-                closeGalleryWindow();
-
-
-            }
-        );
+        
 
 
         galleryGrid.appendChild(
