@@ -43,6 +43,16 @@ async function init() {
 
         flowers = await response.json();
 
+        flowers = flowers.map((image) => {
+
+            return {
+                image: CONFIG.imageFolder + image,
+                name: "",
+                text: ""
+            };
+
+        });
+
         if (!Array.isArray(flowers) || flowers.length === 0) {
             throw new Error(
                 "blueten.json enthält keine gültigen Daten."
