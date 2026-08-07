@@ -467,6 +467,11 @@ function openGallery() {
         "open"
     );
 
+    document.getElementById(
+        "buttonBar"
+    ).style.display = "none";
+
+
     gallery.setAttribute(
         "aria-hidden",
         "false"
