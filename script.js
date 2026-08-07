@@ -452,7 +452,13 @@ function buildGallery() {
 
 }
 
+function hideButtons() {
 
+    document.getElementById(
+        "buttonBar"
+    ).style.display = "none";
+
+}
 /* ==========================================================
    Galerie öffnen
    ========================================================== */
@@ -467,9 +473,7 @@ function openGallery() {
         "open"
     );
 
-    document.getElementById(
-        "buttonBar"
-    ).style.display = "none";
+    hideButtons();
 
 
     gallery.setAttribute(
@@ -498,6 +502,12 @@ function closeGalleryWindow() {
         "aria-hidden",
         "true"
     );
+
+}
+
+function showButtons() {
+
+    showButtons();
 
 }
 
