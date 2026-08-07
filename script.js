@@ -390,7 +390,11 @@ function buildGallery() {
 
 
         img.className =
-         "galleryImage";
+            "galleryImage";
+
+
+        img.src =
+            flower.image;
 
 
         img.alt =
