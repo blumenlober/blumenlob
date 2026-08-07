@@ -176,3 +176,333 @@ function preloadImage(src) {
     });
 
 }
+
+/* ==========================================================
+   Blütenwechsel
+   ========================================================== */
+
+async function showRandomFlower(removeOld = true) {
+
+    if (remainingFlowers.length === 0) {
+
+        refillRemainingFlowers();
+
+    }
+
+
+    const index = Math.floor(
+        Math.random() * remainingFlowers.length
+    );
+
+
+    currentFlower = remainingFlowers[index];
+
+
+    remainingFlowers.splice(index, 1);
+
+
+    saveRemainingFlowers();
+
+
+    try {
+
+        await preloadImage(
+            currentFlower.image
+        );
+
+
+        displayFlower(
+            currentFlower
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
+}
+
+
+/* ==========================================================
+   Blume anzeigen
+   ========================================================== */
+
+function displayFlower(flower) {
+
+
+    hiddenFlower.src = flower.image;
+
+
+    hiddenFlower.alt =
+        flower.name || "Blüte des Lobes";
+
+
+    hiddenFlower.classList.add(
+    "visible"
+);
+
+
+activeFlower.classList.remove(
+    "visible"
+);
+
+    setTimeout(() => {
+
+
+        const temp = activeFlower;
+
+
+        activeFlower = hiddenFlower;
+
+
+        hiddenFlower = temp;
+
+
+        hiddenFlower.src = "";
+
+
+    }, 600);
+
+
+
+    updateText(
+        flower
+    );
+
+}
+
+
+/* ==========================================================
+   Text aktualisieren
+   ========================================================== */
+
+function updateText(flower) {
+
+
+    const title =
+        document.getElementById(
+            "flowerTitle"
+        );
+
+
+    const text =
+        document.getElementById(
+            "flowerText"
+        );
+
+
+    if (title) {
+
+        title.textContent =
+            flower.name || "";
+
+    }
+
+
+    if (text) {
+
+        text.textContent =
+            flower.text || "";
+
+    }
+
+}
+
+
+/* ==========================================================
+   Tastatursteuerung
+   ========================================================== */
+
+function handleKeyDown(event) {
+
+
+    if (
+        event.key === "Escape" &&
+        gallery.classList.contains("open")
+    ) {
+
+        closeGalleryWindow();
+
+        return;
+
+    }
+
+
+    if (
+        event.key === "ArrowRight" ||
+        event.key === " "
+    ) {
+
+        showRandomFlower();
+
+    }
+
+
+    if (
+        event.key === "g" ||
+        event.key === "G"
+    ) {
+
+        openGallery();
+
+    }
+
+}
+
+/* ==========================================================
+   Galerie
+   ========================================================== */
+
+function buildGallery() {
+
+    galleryGrid.innerHTML = "";
+
+
+    flowers.forEach((flower) => {
+
+
+        const item = document.createElement(
+            "div"
+        );
+
+
+        item.className =
+            "galleryItem";
+
+
+        const img = document.createElement(
+            "img"
+        );
+
+
+        img.className =
+         "galleryImage";
+
+
+        img.alt =
+            flower.name || "Blüte";
+
+
+        img.loading =
+            "lazy";
+
+
+        const title =
+            document.createElement(
+                "div"
+            );
+
+
+        title.className =
+            "galleryTitle";
+
+
+        title.textContent =
+            flower.name || "";
+
+
+        item.appendChild(img);
+
+        item.appendChild(title);
+
+
+
+        item.addEventListener(
+            "click",
+            () => {
+
+
+                currentFlower =
+                    flower;
+
+
+                displayFlower(
+                    flower
+                );
+
+
+                closeGalleryWindow();
+
+
+            }
+        );
+
+
+        galleryGrid.appendChild(
+            item
+        );
+
+
+    });
+
+}
+
+
+/* ==========================================================
+   Galerie öffnen
+   ========================================================== */
+
+function openGallery() {
+
+    gallery.classList.remove(
+        "hidden"
+    );
+
+    gallery.classList.add(
+        "open"
+    );
+
+    gallery.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+}
+
+
+/* ==========================================================
+   Galerie schließen
+   ========================================================== */
+
+function closeGalleryWindow() {
+
+    gallery.classList.remove(
+        "open"
+    );
+
+    gallery.classList.add(
+        "hidden"
+    );
+
+    gallery.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+}
+
+
+/* ==========================================================
+   Sicherheitsfunktionen
+   ========================================================== */
+
+window.addEventListener(
+    "error",
+    (event) => {
+
+        console.error(
+            "JavaScript Fehler:",
+            event.error
+        );
+
+    }
+);
+
+
+/* ==========================================================
+   Ende script.js
+   ========================================================== */
