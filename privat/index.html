@@ -2,11 +2,14 @@
 <html lang="de">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Blüten des Lobes</title>
 
-    <link rel="stylesheet" href="../styles.css?v=3">
+    <link rel="stylesheet" href="../styles.css?v=4">
+
 </head>
 
 <body>
@@ -15,29 +18,59 @@
 
     <div id="flowerContainer">
 
-        <img id="flowerA" class="flower visible" src="" alt="">
-        <img id="flowerB" class="flower" src="" alt="">
+        <img
+            id="flowerA"
+            class="flower visible"
+            src=""
+            alt=""
+            draggable="false">
+
+        <img
+            id="flowerB"
+            class="flower hidden"
+            src=""
+            alt=""
+            draggable="false">
+
     </div>
 
     <div id="buttonBar">
 
-        <button id="nextButton">
+        <button
+            id="nextButton"
+            type="button">
+
             🌼 Neue Blüte pflücken
+
         </button>
 
-        <button id="galleryButton">
+        <button
+            id="galleryButton"
+            type="button">
+
             📖 Alle Blüten ansehen
+
         </button>
 
     </div>
 
 </main>
 
-<div id="gallery" class="hidden">
+<div
+    id="gallery"
+    class="hidden"
+    aria-hidden="true">
 
     <div id="galleryContent">
 
-        <button id="closeGallery">✕</button>
+        <button
+            id="closeGallery"
+            type="button"
+            aria-label="Galerie schließen">
+
+            ✕
+
+        </button>
 
         <div id="galleryGrid"></div>
 
@@ -46,14 +79,20 @@
 </div>
 
 <script>
+
 const CONFIG = {
+
     json: "blueten.json",
+
     imageFolder: "blueten/",
+
     storageKey: "blueten-privat"
+
 };
+
 </script>
 
-<script src="../script.js?v=3"></script>
+<script src="../script.js?v=4"></script>
 
 </body>
 

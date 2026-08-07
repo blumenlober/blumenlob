@@ -1,3 +1,9 @@
+/* ==========================================================
+   Blüten des Lobes
+   script.js
+   Teil 1 von 3
+   ========================================================== */
+
 const flowerA = document.getElementById("flowerA");
 const flowerB = document.getElementById("flowerB");
 
@@ -8,170 +14,165 @@ const gallery = document.getElementById("gallery");
 const galleryGrid = document.getElementById("galleryGrid");
 const closeGallery = document.getElementById("closeGallery");
 
-const STORAGE_KEY = CONFIG.storageKey;
-
-let images = [];
-let remaining = [];
-
 let activeFlower = flowerA;
 let hiddenFlower = flowerB;
 
+let flowers = [];
+let remainingFlowers = [];
+let currentFlower = null;
+
+/* ==========================================================
+   Initialisierung
+   ========================================================== */
+
+window.addEventListener("DOMContentLoaded", init);
+
 async function init() {
 
-    
+    try {
 
-    alert("Init gestartet");
+        const response = await fetch(CONFIG.json + "?v=" + Date.now(), {
+            cache: "no-store"
+        });
 
-    const response = await fetch(CONFIG.json);
-
-    alert("JSON geladen");
-
-    images = await response.json();
-
-    alert("JSON eingelesen");
-
-    loadState();
-
-    alert("State geladen");
-
-    await showNextFlower(false);
-
-    alert("Erstes Bild geladen");
-
-    ...
-}
-
-    const response = await fetch(CONFIG.json);
-    images = await response.json();
-
-    loadState();
-
-    await showNextFlower(false);
-
-    buildGallery();
-
-    nextButton.addEventListener("click", () => {
-        showNextFlower(true);
-    });
-
-    galleryButton.addEventListener("click", () => {
-
-    alert("Galerie-Button funktioniert");
-
-});
-
-    closeGallery.addEventListener("click", () => {
-        gallery.classList.add("hidden");
-    });
-
-    gallery.addEventListener("click", (e) => {
-        if (e.target === gallery) {
-            gallery.classList.add("hidden");
+        if (!response.ok) {
+            throw new Error(
+                "blueten.json konnte nicht geladen werden."
+            );
         }
-    });
+
+        flowers = await response.json();
+
+        if (!Array.isArray(flowers) || flowers.length === 0) {
+            throw new Error(
+                "blueten.json enthält keine gültigen Daten."
+            );
+        }
+
+        loadRemainingFlowers();
+
+        buildGallery();
+
+        nextButton.addEventListener("click", () => {
+            showRandomFlower();
+        });
+
+        galleryButton.addEventListener("click", openGallery);
+
+        closeGallery.addEventListener("click", closeGalleryWindow);
+
+        gallery.addEventListener("click", (event) => {
+
+            if (event.target === gallery) {
+                closeGalleryWindow();
+            }
+
+        });
+
+        document.addEventListener("keydown", handleKeyDown);
+
+        await showRandomFlower(false);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
 }
 
-function loadState() {
+/* ==========================================================
+   Speicherung
+   ========================================================== */
 
-    const saved = localStorage.getItem(STORAGE_KEY);
+function loadRemainingFlowers() {
+
+    const saved = localStorage.getItem(CONFIG.storageKey);
 
     if (!saved) {
-        refillRemaining();
+
+        refillRemainingFlowers();
         return;
+
     }
 
     try {
 
-        remaining = JSON.parse(saved);
+        remainingFlowers = JSON.parse(saved);
 
-        if (!Array.isArray(remaining)) {
+        if (!Array.isArray(remainingFlowers)) {
             throw new Error();
         }
 
     } catch {
 
-        refillRemaining();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
+        refillRemainingFlowers();
 
     }
 
 }
 
-function refillRemaining() {
+function saveRemainingFlowers() {
 
-    remaining = [...images];
-    shuffle(remaining);
+    localStorage.setItem(
+        CONFIG.storageKey,
+        JSON.stringify(remainingFlowers)
+    );
 
 }
 
-function shuffle(array) {
+function refillRemainingFlowers() {
+
+    remainingFlowers = [...flowers];
+
+    shuffleArray(remainingFlowers);
+
+    saveRemainingFlowers();
+
+}
+
+/* ==========================================================
+   Zufall
+   ========================================================== */
+
+function shuffleArray(array) {
 
     for (let i = array.length - 1; i > 0; i--) {
 
         const j = Math.floor(Math.random() * (i + 1));
 
-        [array[i], array[j]] = [array[j], array[i]];
+        [array[i], array[j]] = [
+            array[j],
+            array[i]
+        ];
 
     }
 
 }
 
-function loadImage(img, src) {
+/* ==========================================================
+   Bild laden
+   ========================================================== */
 
-    return new Promise((resolve) => {
+function preloadImage(src) {
 
-        img.onload = resolve;
+    return new Promise((resolve, reject) => {
+
+        const img = new Image();
+
+        img.onload = () => resolve(src);
+
+        img.onerror = () =>
+            reject(
+                new Error(
+                    "Bild konnte nicht geladen werden:\n" + src
+                )
+            );
+
         img.src = src;
 
     });
 
 }
-
-async function showNextFlower(withAnimation = true) {
-
-    if (remaining.length === 0) {
-        refillRemaining();
-    }
-
-    const file = remaining.pop();
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(remaining));
-
-    await loadImage(hiddenFlower, CONFIG.imageFolder + file);
-
-    if (withAnimation) {
-
-        activeFlower.classList.remove("visible");
-        hiddenFlower.classList.add("visible");
-
-        [activeFlower, hiddenFlower] = [hiddenFlower, activeFlower];
-
-    } else {
-
-        activeFlower.src = hiddenFlower.src;
-        activeFlower.classList.add("visible");
-        hiddenFlower.classList.remove("visible");
-
-    }
-
-}
-
-function buildGallery() {
-
-    galleryGrid.innerHTML = "";
-
-    images.forEach(file => {
-
-        const img = document.createElement("img");
-
-        img.src = CONFIG.imageFolder + file;
-        img.className = "galleryImage";
-        img.alt = "";
-
-        galleryGrid.appendChild(img);
-
-    });
-
-}
-
-init();
